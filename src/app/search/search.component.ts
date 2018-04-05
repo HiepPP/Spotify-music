@@ -10,6 +10,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class SearchComponent implements OnInit {
   query: string;
+  type: string;
   results: Object;
 
   constructor(
@@ -19,6 +20,7 @@ export class SearchComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe(params => {
       this.query = params["query"] || "";
+      this.type = params["type"] || "";
     });
   }
 
@@ -28,7 +30,7 @@ export class SearchComponent implements OnInit {
     }
 
     this.spotiflyService
-      .searchTrack(this.query)
+      .searchTrack(this.query, this.type)
       .subscribe(res => this.renderResult(res));
   }
 
@@ -39,9 +41,9 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  submit(query: string) {
+  submit(query: string, type: string) {
     this.router
-      .navigate(["search"], { queryParams: { query: query } })
+      .navigate(["search"], { queryParams: { query: query, type: type} })
       .then(_ => this.search());
   }
   ngOnInit() {

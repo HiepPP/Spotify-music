@@ -1,26 +1,45 @@
 import { Http, RequestOptionsArgs } from "@angular/http";
 import "rxjs/Rx";
 import { Injectable } from "@angular/core";
-import { RequestOptions } from '@angular/http';
+import { RequestOptions } from "@angular/http";
 import { request } from "http";
 import { Headers } from "@angular/http";
+import { tap } from "rxjs/operators/tap";
+import { catchError } from "rxjs/operators";
+import { error } from "util";
+import { Observable } from "rxjs/Observable";
+import { environment } from "../environments/environment.prod";
+import { query } from "@angular/core/src/animation/dsl";
 
 @Injectable()
 export class SpotiflyService {
+  static BASE_URL = "https://api.spotify.com/v1";
   constructor(private http: Http) {}
 
-  searchTrack(query: string) {
-    let myHeaders = new Headers;
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('Authorization', 'Bearer BQCQb5wctCRVEoFNowSTh-5xvYnjCt99O63pvKISWJmbUbpYYwilCD8P63HcUOZaMW9MEtrw2AoOo8EodGZKIZzrU70f4mCYQBjdfBC_q0aEB5P0XzBbEpWHjTbHxDoNQGWIDmKd3JjhyY7LCDlRXSjFi__lKoX_ShI8CH_dd1SPEOFixSDUE0JXvZWMdodcCTlBY26TjftbLF9Ij6Y_qtSUL_xJE7a6EN6kWAv9dy8mVyuwRSNQ0Kurkb8-nb4swCG466GtTAWVKsG1_cOOcR3TxQg');
+  query(url: string, params?: Array<string>): Observable<any[]> {
+    let query_url = `${SpotiflyService.BASE_URL}${url}`;
+    if (params) {
+      query_url = `${query_url}?${params.join("&")}`;
+    }
+      const apiKey = environment.SpotifyApiKey;
+      const header = new Headers({
+        Authorization: `Bearer ${apiKey}`
+      });
+      console.log(query_url)
+      const requestOption = new RequestOptions({ headers: header });
 
-    let options = new RequestOptions({headers : myHeaders});
-
-
-
-    let params = [`q=${query}`, `type=track`, `limit=5`].join("&");
-
-    let queryURL: string = `https://api.spotify.com/v1/search?${params}`;
-    return this.http.get(queryURL, options).map(response => response.json());
+      return this.http.request(query_url, requestOption).map(res => res.json());
   }
+
+  search(query: string, type: string): Observable<any> {
+    return this.query(`/search`, [`q=${query}`, `type=${type}`]);
+  }
+   searchTrack(query: string, type: string): Observable<any> {
+      return this.search(query, 'track');
+   }
+
+   //track
+   getTrack(id: string): Observable<any[]>{
+     return this.query(`/tracks/${id}`);
+   }
 }

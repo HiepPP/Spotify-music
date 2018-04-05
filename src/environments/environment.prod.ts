@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  SpotifyApiKey: 'BQCbllWN3QZ1xFioqxGtHWmH4AfxtGPOZwlOIINkW3e5_ebGKkkelKRY4zm56YqYhIzF-6gezvDgPbuNYxa7zs8c8aA5AkjhDdqOW1Au71-IPZsgyUfik_c9LVXg1b-RA9y6-2SxN5lm7lSMyyErRlwg14_rq9_MdYrif20FFLUs_u3C9ByvFIUdW-Vb6l3FAff6O9THoOCsQyTuIhe_FfgMqtyV8ccsb_5JdoLPIj9CBPnZgxvutBGNa9L8pl47g0kMTxW0cGq0BAYnYGfOtxLMEE4'
 };

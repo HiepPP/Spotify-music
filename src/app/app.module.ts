@@ -19,7 +19,9 @@ import { HttpModule } from "@angular/http";
 const routes: Routes = [
   { path: "", redirectTo: "search", pathMatch: "full" },
   { path: "search", component: SearchComponent },
-  { path: "tracks/:id", component: TrackComponent }
+  { path: "tracks/:id", component: TrackComponent },
+  { path: "artists/:id", component: ArtistComponent },
+  { path: "albums/:id", component: AlbumComponent }
 ];
 
 @NgModule({

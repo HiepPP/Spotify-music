@@ -42,4 +42,13 @@ export class SpotiflyService {
    getTrack(id: string): Observable<any[]>{
      return this.query(`/tracks/${id}`);
    }
+   //artist
+   getArtist(id: string): Observable<any>{
+    return this.query(`/artists/${id}`);
+  }
+
+  //albums
+  getAlbums(id: string): Observable<any>{
+    return this.query(`/albums/${id}`);
+  }
 }

@@ -1,3 +1,16 @@
-<p>
-  artist works!
-</p>
+<div>
+  <h1>{{artist.name}}</h1>
+  <p>Follower: {{artist.followers.total}}</p>
+  <p>
+    Popularity: {{artist.popularity}}
+  </p>
+  <div>
+    genres:
+    <ul *ngFor="let item of artist.genres">
+      <li> {{item}}</li>
+    </ul>
+  </div>
+  <p>
+    <img src="{{artist.images[0].url}}" class="img-responsive">
+  </p>
+</div>

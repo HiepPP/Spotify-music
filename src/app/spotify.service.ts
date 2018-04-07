@@ -2,7 +2,6 @@ import { Http, RequestOptionsArgs } from "@angular/http";
 import "rxjs/Rx";
 import { Injectable } from "@angular/core";
 import { RequestOptions } from "@angular/http";
-import { request } from "http";
 import { Headers } from "@angular/http";
 import { tap } from "rxjs/operators/tap";
 import { catchError } from "rxjs/operators";
@@ -10,11 +9,12 @@ import { error } from "util";
 import { Observable } from "rxjs/Observable";
 import { environment } from "../environments/environment.prod";
 import { query } from "@angular/core/src/animation/dsl";
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class SpotiflyService {
   static BASE_URL = "https://api.spotify.com/v1";
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   query(url: string, params?: Array<string>): Observable<any[]> {
     let query_url = `${SpotiflyService.BASE_URL}${url}`;
@@ -28,7 +28,7 @@ export class SpotiflyService {
       console.log(query_url)
       const requestOption = new RequestOptions({ headers: header });
 
-      return this.http.request(query_url, requestOption).map(res => res.json());
+      return this.http.get<any>(query_url);
   }
 
   search(query: string, type: string): Observable<any> {

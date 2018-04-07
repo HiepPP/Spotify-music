@@ -14,7 +14,8 @@ import { ArtistComponent } from "./artist/artist.component";
 import { SearchComponent } from "./search/search.component";
 import { TrackComponent } from "./track/track.component";
 import { SpotiflyService } from "./spotify.service";
-import { HttpModule } from "@angular/http";
+//import { HttpModule } from "@angular/http";
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: "", redirectTo: "search", pathMatch: "full" },
@@ -32,7 +33,7 @@ const routes: Routes = [
     SearchComponent,
     TrackComponent
   ],
-  imports: [BrowserModule, HttpModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(routes)],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_BASE_HREF, useValue: "/" },
